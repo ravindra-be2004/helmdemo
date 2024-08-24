@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    deployment: {{ .Values.prodServices.labels.deployment }}
+  name: {{ .Values.prodServices.fullname }}
+spec:
+  host: {{ .Values.prodServices.host }}.{{ .Values.prodServices.domain }} 
+  port:
+    targetPort: http
+  to:
+    kind: ""
+    name: {{ .Values.prodServices.fullname }} 
+

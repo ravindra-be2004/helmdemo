@@ -1,0 +1,25 @@
+{{ with .Values.prodServices }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .fullname }}
+  labels:
+    deployment: {{ .labels.deployment }}
+spec:
+  replicas: {{ .replicaCount }}
+  selector:
+    matchLabels:
+      deployment: {{ .labels.deployment }}
+  template:
+    metadata:
+      labels:
+        deployment: {{ .labels.deployment }}
+    spec:
+      containers:
+        - name: web
+          image: "{{ .image }}"
+          ports:
+            - name: http
+              containerPort: {{ .service.port }}
+              protocol: TCP
+{{ end }}      
