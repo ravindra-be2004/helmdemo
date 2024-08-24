@@ -1,0 +1,25 @@
+{{ with .Values.webServices }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .fullname }}
+  labels:
+    deployment: web
+spec:
+  replicas: {{ .replicaCount }}
+  selector:
+    matchLabels:
+      deployment: web
+  template:
+    metadata:
+      labels:
+        deployment: web
+    spec:
+      containers:
+        - name: web
+          image: "{{ .image }}"
+          ports:
+            - name: http
+              containerPort: {{ .service.port }}
+              protocol: TCP
+{{ end }}      
